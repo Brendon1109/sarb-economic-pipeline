@@ -11,7 +11,7 @@ This document provides instructions for providing access to the SARB Economic Pi
 gh repo create sarb-economic-pipeline --public --description "South African Macroeconomic Indicators Pipeline & AI Analyst"
 
 # Add GitHub as remote origin
-git remote add origin https://github.com/YOUR_USERNAME/sarb-economic-pipeline.git
+git remote add origin https://github.com/Brendon1109/sarb-economic-pipeline.git
 
 # Push to GitHub
 git branch -M main

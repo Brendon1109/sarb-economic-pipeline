@@ -4,12 +4,12 @@
 
 ### 1. Repository URL
 ```
-https://github.com/YOUR_USERNAME/sarb-economic-pipeline
+https://github.com/Brendon1109/sarb-economic-pipeline
 ```
 
 ### 2. Clone Repository
 ```bash
-git clone https://github.com/YOUR_USERNAME/sarb-economic-pipeline.git
+git clone https://github.com/Brendon1109/sarb-economic-pipeline.git
 cd sarb-economic-pipeline
 ```
 
