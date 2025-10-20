@@ -611,9 +611,53 @@ CLUSTER BY indicator_name, source;
         </div>
     </div>
     
+    <h3>Monthly Cost Breakdown (Realistic Estimates)</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Service</th>
+                <th>Component</th>
+                <th>Monthly Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>BigQuery</td>
+                <td>Storage (200GB) + Queries (3TB)</td>
+                <td>$19.00</td>
+            </tr>
+            <tr>
+                <td>Cloud Storage</td>
+                <td>Data Storage (300GB)</td>
+                <td>$6.00</td>
+            </tr>
+            <tr>
+                <td>Cloud Run</td>
+                <td>Compute Resources</td>
+                <td>$8.00</td>
+            </tr>
+            <tr>
+                <td>Monitoring & Logging</td>
+                <td>Operations & Security</td>
+                <td>$15.00</td>
+            </tr>
+            <tr>
+                <td>KMS & Secrets</td>
+                <td>Encryption Services</td>
+                <td>$5.00</td>
+            </tr>
+            <tr style="font-weight: bold; background-color: #e7f3ff;">
+                <td><strong>Total</strong></td>
+                <td><strong>Estimated Monthly</strong></td>
+                <td><strong>$53.00</strong></td>
+            </tr>
+        </tbody>
+    </table>
+    
     <h3>Cost Optimization Strategy</h3>
     <ul>
-        <li><strong>Pay-as-you-use</strong> pricing model (estimated $500-1000/month)</li>
+        <li><strong>Pay-as-you-use</strong> pricing model (baseline $50-75/month)</li>
+        <li><strong>Usage-based scaling</strong>: Low ($25-40), Medium ($50-75), High ($100-150)</li>
         <li><strong>Storage lifecycle</strong> management for cost efficiency</li>
         <li><strong>Query optimization</strong> to reduce compute costs</li>
         <li><strong>Reserved capacity</strong> for predictable workloads</li>
@@ -847,9 +891,10 @@ python tests/security_audit.py --comprehensive-scan
         <h4>Q: What are the ongoing operational costs and budget requirements?</h4>
         <p><strong>A: Transparent Cost Structure</strong></p>
         <ul>
-            <li>Current Estimate: $500-1000/month for projected data volumes</li>
+            <li>Current Estimate: $50-150/month for projected data volumes</li>
             <li>Pay-as-you-use model - no upfront infrastructure costs</li>
             <li>Cost optimization features built in (storage lifecycle, query optimization)</li>
+            <li>Annual projection: $600-1,800 with seasonal scaling</li>
         </ul>
     </div>
     
