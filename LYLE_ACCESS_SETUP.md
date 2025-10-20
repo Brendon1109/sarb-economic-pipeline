@@ -36,7 +36,7 @@ Based on the email domain `automationarchitects.ai`, Lyle appears to be a techni
 ### Grant GCP Access (PowerShell)
 ```powershell
 # Set variables
-$ProjectId = "your-actual-project-id"  # Replace with your GCP project ID
+$ProjectId = "molten-avatar-437519-m8"  # Your GCP project ID
 $UserEmail = "lyle@automationarchitects.ai"
 $RoleType = "engineer"
 
@@ -47,7 +47,7 @@ $RoleType = "engineer"
 ### Manual GCP Access Grant (if script not available)
 ```bash
 # Set your project ID
-export PROJECT_ID="your-actual-project-id"
+export PROJECT_ID="molten-avatar-437519-m8"
 
 # Grant Data Engineer permissions
 gcloud projects add-iam-policy-binding $PROJECT_ID \
@@ -101,10 +101,10 @@ You now have access to the SARB Economic Pipeline project:
 - Clone: git clone https://github.com/Brendon1109/sarb-economic-pipeline.git
 
 ☁️ **GCP Project Access**:
-- Project ID: [YOUR_PROJECT_ID]
+- Project ID: molten-avatar-437519-m8
 - Role: Data Engineer (BigQuery, Storage, Cloud Run access)
 - Authenticate: gcloud auth login
-- Set project: gcloud config set project [YOUR_PROJECT_ID]
+- Set project: gcloud config set project molten-avatar-437519-m8
 
 📋 **Next Steps**:
 1. Clone the repository
