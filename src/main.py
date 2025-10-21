@@ -32,11 +32,12 @@ class SARBDataPipeline:
     Main pipeline class implementing the Medallion Architecture for SARB economic data
     """
     
-    def __init__(self):
-        self.project_id = os.getenv('GCP_PROJECT_ID')
-        self.bucket_name = os.getenv('GCS_BUCKET_NAME')
+    def __init__(self, project_id=None):
+        # Use assessment project by default
+        self.project_id = project_id or os.getenv('GCP_PROJECT_ID', 'brendon-presentation')
+        self.bucket_name = os.getenv('GCS_BUCKET_NAME', f'{self.project_id}-economic-raw-data')
         self.dataset_id = os.getenv('BIGQUERY_DATASET_ID', 'sarb_economic_data')
-        self.region = os.getenv('GCP_REGION', 'europe-west1')
+        self.region = os.getenv('GCP_REGION', 'us-central1')
         
         # Initialize GCP clients
         self.storage_client = storage.Client(project=self.project_id)
@@ -487,6 +488,92 @@ def manual_trigger():
     except Exception as e:
         return jsonify({'error': str(e)}), 500
 
+def create_sample_data():
+    """Create sample economic data for assessment demo"""
+    sample_data = [
+        {
+            'indicator_id': 'REPO_RATE',
+            'indicator_name': 'Repository Rate',
+            'value': 7.75,
+            'date_recorded': '2025-10-21',
+            'source': 'SARB'
+        },
+        {
+            'indicator_id': 'CPI_INFLATION',
+            'indicator_name': 'Consumer Price Index',
+            'value': 4.2,
+            'date_recorded': '2025-10-21',
+            'source': 'Statistics SA'
+        },
+        {
+            'indicator_id': 'GDP_GROWTH',
+            'indicator_name': 'GDP Growth Rate',
+            'value': 2.1,
+            'date_recorded': '2025-09-30',
+            'source': 'Statistics SA'
+        },
+        {
+            'indicator_id': 'UNEMPLOYMENT',
+            'indicator_name': 'Unemployment Rate',
+            'value': 32.4,
+            'date_recorded': '2025-09-30',
+            'source': 'Statistics SA'
+        },
+        {
+            'indicator_id': 'PRIME_RATE',
+            'indicator_name': 'Prime Lending Rate',
+            'value': 11.25,
+            'date_recorded': '2025-10-21',
+            'source': 'SARB'
+        }
+    ]
+    return sample_data
+
 if __name__ == '__main__':
-    port = int(os.getenv('PORT', 8080))
-    app.run(host='0.0.0.0', port=port, debug=False)
+    import argparse
+    
+    parser = argparse.ArgumentParser(description='SARB Economic Pipeline')
+    parser.add_argument('--project-id', default='brendon-presentation', help='GCP Project ID')
+    parser.add_argument('--upload-sample-data', action='store_true', help='Upload sample data for demo')
+    parser.add_argument('--run-pipeline', action='store_true', help='Run the full pipeline')
+    parser.add_argument('--port', type=int, default=8080, help='Port for Flask app')
+    
+    args = parser.parse_args()
+    
+    if args.upload_sample_data:
+        print(f"Uploading sample data to project: {args.project_id}")
+        pipeline = SARBDataPipeline(project_id=args.project_id)
+        
+        # Create sample data and upload to BigQuery
+        sample_data = create_sample_data()
+        df = pd.DataFrame(sample_data)
+        
+        try:
+            table_id = f"{args.project_id}.sarb_economic_data.economic_indicators"
+            job_config = bigquery.LoadJobConfig(
+                write_disposition="WRITE_APPEND",
+                schema_update_options=[bigquery.SchemaUpdateOption.ALLOW_FIELD_ADDITION]
+            )
+            
+            job = pipeline.bigquery_client.load_table_from_dataframe(
+                df, table_id, job_config=job_config
+            )
+            job.result()  # Wait for the job to complete
+            
+            print(f"✅ Successfully uploaded {len(sample_data)} sample records")
+            print(f"View in BigQuery: https://console.cloud.google.com/bigquery?project={args.project_id}")
+            
+        except Exception as e:
+            print(f"❌ Error uploading sample data: {e}")
+    
+    elif args.run_pipeline:
+        print(f"Running full pipeline for project: {args.project_id}")
+        pipeline = SARBDataPipeline(project_id=args.project_id)
+        result = pipeline.run_full_pipeline()
+        print(f"Pipeline result: {result}")
+    
+    else:
+        # Run Flask app
+        print(f"Starting Flask app for project: {args.project_id}")
+        port = args.port
+        app.run(host='0.0.0.0', port=port, debug=False)

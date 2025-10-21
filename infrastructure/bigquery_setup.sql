@@ -1,23 +1,25 @@
 -- BigQuery Infrastructure Setup for SARB Economic Pipeline
--- This script creates the dataset and tables required for the Medallion Architecture
+-- This script creates the dataset and tables required for the Assessment
+-- Project ID: brendon-presentation (provided by assessor)
 
--- Create the main dataset
-CREATE SCHEMA IF NOT EXISTS `sarb_economic_data`
+-- Create the main dataset for the assessment project
+CREATE SCHEMA IF NOT EXISTS `brendon-presentation.sarb_economic_data`
 OPTIONS (
-  description = "South African Reserve Bank Economic Indicators Dataset",
-  location = "europe-west1"
+  description = "SARB Economic Pipeline Assessment - Economic Indicators Dataset",
+  location = "US"
 );
 
--- Silver Layer: Economic Indicators Table with Monthly Partitioning
-CREATE OR REPLACE TABLE `sarb_economic_data.silver_economic_indicators` (
-  observation_date DATE NOT NULL,
-  indicator_code STRING NOT NULL,
+-- Economic Indicators Table for Assessment Demo
+CREATE OR REPLACE TABLE `brendon-presentation.sarb_economic_data.economic_indicators` (
+  indicator_id STRING NOT NULL,
   indicator_name STRING NOT NULL,
-  value FLOAT64 NOT NULL,
-  load_timestamp TIMESTAMP NOT NULL
+  value NUMERIC NOT NULL,
+  date_recorded DATE NOT NULL,
+  source STRING NOT NULL,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP()
 )
-PARTITION BY DATE_TRUNC(observation_date, MONTH)
-CLUSTER BY indicator_code
+PARTITION BY DATE(date_recorded)
+CLUSTER BY indicator_name, source
 OPTIONS (
   description = "Silver layer table containing cleaned and standardized economic indicators from SARB",
   partition_expiration_days = NULL,
