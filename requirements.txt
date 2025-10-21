@@ -3,8 +3,14 @@ pandas==2.1.4
 google-cloud-storage==2.10.0
 google-cloud-bigquery==3.13.0
 google-cloud-aiplatform==1.38.1
+google-cloud-run==0.10.3
+google-cloud-logging==3.8.0
+google-cloud-monitoring==2.16.0
+google-cloud-secret-manager==2.17.0
 vertexai==0.0.1
 flask==3.0.0
 gunicorn==21.2.0
 numpy==1.24.3
 pyarrow==14.0.1
+jupyter==1.0.0
+ipykernel==6.25.0
