@@ -8,6 +8,8 @@ SARB Economic Data Pipeline
 Automated Cloud-Based Economic Analysis Platform
 
 • South African Reserve Bank
+• Project Lead: Brendon Mapinda
+• Contact: mapindabrendon@gmail.com
 • Economic Data Processing & Analytics
 • October 2025
 • Built on Google Cloud Platform
@@ -312,9 +314,11 @@ Q: What are ongoing operational costs?
 A: Pay-as-you-use model, estimated $500-1000/month
 
 Contact Information:
+• Project Lead: Brendon Mapinda (mapindabrendon@gmail.com)
 • Repository: github.com/Brendon1109/sarb-economic-pipeline
 • Documentation: Available in /docs folder
-• Support: GitHub Issues
+• Questions & Queries: mapindabrendon@gmail.com
+• Technical Support: GitHub Issues
 
 Demo Status:
 ✅ Live system operational

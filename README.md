@@ -429,9 +429,10 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## Support
 
 For questions or support:
+- **Project Lead**: Brendon Mapinda - mapindabrendon@gmail.com
 - Create an issue in the repository
-- Email: [your-email@domain.com]
-- Documentation: [Link to additional docs]
+- Email: mapindabrendon@gmail.com
+- Documentation: Available in `/docs` folder
 
 ---
 

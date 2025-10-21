@@ -144,4 +144,11 @@ The following files have been updated to work with the assessment project:
 4. ✅ Practice the presentation flow
 5. ✅ Prepare for live demonstration
 
+## Contact Information
+
+For questions or support regarding this assessment setup:
+- **Project Lead**: Brendon Mapinda
+- **Email**: mapindabrendon@gmail.com
+- **Repository**: github.com/Brendon1109/sarb-economic-pipeline
+
 The system is now configured to work with the assessor's GCP project `brendon-presentation` and ready for your assessment presentation.

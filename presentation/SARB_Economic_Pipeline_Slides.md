@@ -585,10 +585,11 @@ def process_realtime_economic_data(message):
 ## Technical Support & Resources
 
 ### Contact Information
-- **📧 Project Repository**: `github.com/Brendon1109/sarb-economic-pipeline`
+- **� Project Lead**: Brendon Mapinda - mapindabrendon@gmail.com
+- **�📧 Project Repository**: `github.com/Brendon1109/sarb-economic-pipeline`
 - **📚 Documentation Hub**: All guides available in `/docs` folder
 - **🎫 Technical Support**: GitHub Issues for bug reports and feature requests
-- **📞 Emergency Contact**: On-call support during business hours
+- **📞 Questions & Queries**: Contact Brendon at mapindabrendon@gmail.com
 
 ### System Status & Monitoring
 - **📊 System Dashboard**: Real-time health and performance metrics
