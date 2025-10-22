@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SARB Assessment Demo - Interactive Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .demo-timer {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .phase {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .phase:hover {
+            transform: translateY(-5px);
+        }
+
+        .phase-header {
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .phase-header h3 {
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .phase-time {
+            background: rgba(255,255,255,0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+
+        .phase-content {
+            padding: 20px;
+            display: none;
+        }
+
+        .phase.active .phase-content {
+            display: block;
+        }
+
+        .action-box {
+            background: #f8f9fa;
+            border-left: 4px solid #007bff;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+        }
+
+        .command-box {
+            background: #1e1e1e;
+            color: #00ff00;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 10px 0;
+            overflow-x: auto;
+        }
+
+        .talking-points {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .key-points {
+            background: #e8f5e8;
+            border: 1px solid #4CAF50;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .emergency-box {
+            background: #ffebee;
+            border: 1px solid #f44336;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 20px;
+            background: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+        }
+
+        .checklist li {
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .checklist li:before {
+            content: "✅ ";
+            margin-right: 10px;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+        }
+
+        .nav-button {
+            display: block;
+            background: #007bff;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            margin: 5px 0;
+            cursor: pointer;
+            text-decoration: none;
+            text-align: center;
+            font-size: 12px;
+        }
+
+        .nav-button:hover {
+            background: #0056b3;
+        }
+
+        .architecture-diagram {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .flow-step {
+            display: inline-block;
+            background: #4ECDC4;
+            color: white;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .arrow {
+            font-size: 24px;
+            color: #666;
+            margin: 0 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .navigation {
+                position: relative;
+                top: auto;
+                right: auto;
+                margin-bottom: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navigation">
+        <a href="#" class="nav-button" onclick="startDemo()">🚀 Start Demo</a>
+        <a href="#" class="nav-button" onclick="nextPhase()">➡️ Next Phase</a>
+        <a href="#" class="nav-button" onclick="openBackup()">🆘 Emergency</a>
+        <a href="#" class="nav-button" onclick="showCommands()">💻 Commands</a>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>🏦 SARB Economic Pipeline Assessment</h1>
+            <p>Interactive Demo Guide - Production-Grade Data Engineering Solution</p>
+            <div class="demo-timer" id="timer">⏱️ Ready to Start</div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progress"></div>
+            </div>
+        </div>
+
+        <!-- Pre-Demo Checklist -->
+        <div class="phase" id="phase-0">
+            <div class="phase-header" onclick="togglePhase(0)">
+                <h3>📋 Pre-Demo Checklist</h3>
+                <div class="phase-time">5 min prep</div>
+            </div>
+            <div class="phase-content">
+                <div class="action-box">
+                    <h4>🔧 Technical Verification</h4>
+                    <ul class="checklist">
+                        <li>GCP authentication working</li>
+                        <li>BigQuery access confirmed</li>
+                        <li>Python demo scripts tested</li>
+                        <li>Presentation files ready</li>
+                        <li>Jupyter notebook accessible</li>
+                    </ul>
+                </div>
+                
+                <div class="command-box">
+# Quick verification commands
+gcloud auth list
+gcloud config get-value project
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_main.py --query-data
+                </div>
+                
+                <div class="action-box">
+                    <h4>📂 Files to Have Open</h4>
+                    <ul>
+                        <li><code>presentation/SARB_Economic_Pipeline.html</code></li>
+                        <li><code>analysis/sarb_assessment_complete.ipynb</code></li>
+                        <li>This demo guide (current window)</li>
+                        <li>PowerShell terminal ready</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 1: Opening -->
+        <div class="phase" id="phase-1">
+            <div class="phase-header" onclick="togglePhase(1)">
+                <h3>🎬 Phase 1: Project Introduction</h3>
+                <div class="phase-time">2 minutes</div>
+            </div>
+            <div class="phase-content">
+                <div class="talking-points">
+                    <h4>🗣️ Opening Statement</h4>
+                    <p><em>"Good morning! I'm excited to present my SARB Economic Indicators Pipeline - a production-grade data engineering solution built on Google Cloud Platform. This system implements a complete Medallion architecture to process South African Reserve Bank economic data and provide AI-powered insights for monetary policy decisions."</em></p>
+                </div>
+                
+                <div class="action-box">
+                    <h4>💻 Actions</h4>
+                    <ol>
+                        <li>Open <code>presentation/SARB_Economic_Pipeline.html</code></li>
+                        <li>Show slides 1-3: Project overview</li>
+                        <li>Highlight key components: GCP, Medallion Architecture, AI integration</li>
+                        <li>Mention cost optimization: $50-150/month</li>
+                    </ol>
+                </div>
+                
+                <div class="key-points">
+                    <h4>📊 Key Points to Emphasize</h4>
+                    <ul>
+                        <li>Production-ready data engineering solution</li>
+                        <li>Real SARB economic indicators processing</li>
+                        <li>Complete assessment requirements coverage</li>
+                        <li>Enterprise-grade architecture on GCP</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="nav-button" onclick="completePhase(1)">✅ Complete Phase 1</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 2: Architecture Deep Dive -->
+        <div class="phase" id="phase-2">
+            <div class="phase-header" onclick="togglePhase(2)">
+                <h3>🏗️ Phase 2: Architecture Deep Dive</h3>
+                <div class="phase-time">3 minutes</div>
+            </div>
+            <div class="phase-content">
+                <div class="talking-points">
+                    <h4>🗣️ Architecture Explanation</h4>
+                    <p><em>"Let me walk you through the technical architecture. This solution implements the exact Medallion architecture specified in the assessment - Bronze layer for raw data ingestion, Silver for cleansed integration, and Gold for business-ready analytics."</em></p>
+                </div>
+                
+                <div class="architecture-diagram">
+                    <h4>🏗️ Medallion Architecture Flow</h4>
+                    <div style="margin: 20px 0;">
+                        <div class="flow-step">🥉 Bronze Layer</div>
+                        <span class="arrow">→</span>
+                        <div class="flow-step">🥈 Silver Layer</div>
+                        <span class="arrow">→</span>
+                        <div class="flow-step">🥇 Gold Layer</div>
+                    </div>
+                    <div style="margin: 20px 0;">
+                        <div class="flow-step">Raw JSON (GCS)</div>
+                        <span class="arrow">→</span>
+                        <div class="flow-step">Cleansed Data (BigQuery)</div>
+                        <span class="arrow">→</span>
+                        <div class="flow-step">Business Views</div>
+                    </div>
+                </div>
+                
+                <div class="action-box">
+                    <h4>💻 Actions</h4>
+                    <ol>
+                        <li>Show architecture slide in presentation</li>
+                        <li>Open <code>analysis/sarb_assessment_complete.ipynb</code></li>
+                        <li>Navigate to Sections 3-5 (Bronze/Silver/Gold)</li>
+                        <li>Explain data partitioning strategy</li>
+                    </ol>
+                </div>
+                
+                <div class="key-points">
+                    <h4>📊 Technical Highlights</h4>
+                    <ul>
+                        <li><strong>Bronze:</strong> Raw JSON in Cloud Storage with bronze/YYYY/MM/DD/ partitioning</li>
+                        <li><strong>Silver:</strong> Cleansed BigQuery table with monthly partitioning</li>
+                        <li><strong>Gold:</strong> Pivoted view for direct BI consumption</li>
+                        <li><strong>Automation:</strong> Cloud Run + Cloud Scheduler for daily processing</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="nav-button" onclick="completePhase(2)">✅ Complete Phase 2</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 3: Live Demo -->
+        <div class="phase" id="phase-3">
+            <div class="phase-header" onclick="togglePhase(3)">
+                <h3>🚀 Phase 3: Live Data Processing Demo</h3>
+                <div class="phase-time">4 minutes</div>
+            </div>
+            <div class="phase-content">
+                <div class="talking-points">
+                    <h4>🗣️ Demo Introduction</h4>
+                    <p><em>"Now let me demonstrate the live data processing pipeline. This shows how we ingest SARB economic indicators and transform them through our Medallion architecture."</em></p>
+                </div>
+                
+                <div class="action-box">
+                    <h4>💻 Primary Demo Command</h4>
+                    <div class="command-box">
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_main.py --upload-sample-data
+                    </div>
+                    <button class="nav-button" onclick="copyCommand(this.nextElementSibling.textContent)" style="margin: 10px 0;">📋 Copy Command</button>
+                </div>
+                
+                <div class="talking-points">
+                    <h4>🗣️ Commentary During Execution</h4>
+                    <p><em>"As you can see, the system is:</em></p>
+                    <ul>
+                        <li><em>Connecting to the GCP project 'brendon-presentation'</em></li>
+                        <li><em>Creating the BigQuery dataset and table structure</em></li>
+                        <li><em>Processing economic indicators: GDP growth, inflation, prime rates, exchange rates</em></li>
+                        <li><em>Uploading data with proper timestamps and validation"</em></li>
+                    </ul>
+                </div>
+                
+                <div class="action-box">
+                    <h4>💻 Verification Query</h4>
+                    <div class="command-box">
+bq query --use_legacy_sql=false --project_id=brendon-presentation "SELECT indicator_name, value, date, category FROM brendon-presentation.sarb_economic_data.economic_indicators ORDER BY date DESC LIMIT 5"
+                    </div>
+                    <button class="nav-button" onclick="copyCommand(this.nextElementSibling.textContent)" style="margin: 10px 0;">📋 Copy Command</button>
+                </div>
+                
+                <div class="talking-points">
+                    <h4>🗣️ Results Commentary</h4>
+                    <p><em>"Perfect! The data is now available in BigQuery, properly structured and ready for analysis. Notice the clean schema and categorical organization - exactly what the assessment requires."</em></p>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="nav-button" onclick="completePhase(3)">✅ Complete Phase 3</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 4: Statistical Analysis -->
+        <div class="phase" id="phase-4">
+            <div class="phase-header" onclick="togglePhase(4)">
+                <h3>📊 Phase 4: Statistical Analysis & Assessment Question</h3>
+                <div class="phase-time">4 minutes</div>
+            </div>
+            <div class="phase-content">
+                <div class="talking-points">
+                    <h4>🗣️ Analysis Introduction</h4>
+                    <p><em>"The core assessment question asks: 'How have changes in South Africa's prime interest rate and inflation rate historically correlated with the ZAR/USD exchange rate?' Let me show you the comprehensive analysis."</em></p>
+                </div>
+                
+                <div class="action-box">
+                    <h4>💻 Actions</h4>
+                    <ol>
+                        <li>Open Jupyter notebook: <code>analysis/sarb_assessment_complete.ipynb</code></li>
+                        <li>Navigate to Section 6: Data Analysis and Visualization</li>
+                        <li>Show the correlation analysis results</li>
+                        <li>Display the time-series visualization</li>
+                        <li>Explain the correlation matrix</li>
+                    </ol>
+                </div>
+                
+                <div class="key-points">
+                    <h4>📊 Key Findings to Highlight</h4>
+                    <ul>
+                        <li><strong>Prime Rate ↔ ZAR/USD:</strong> Moderate negative correlation (-0.341)</li>
+                        <li><strong>CPI ↔ ZAR/USD:</strong> Strong positive correlation (0.798)</li>
+                        <li><strong>Policy Implications:</strong> Inflation has stronger impact than interest rates</li>
+                        <li><strong>SARB Strategy:</strong> Supports inflation-targeting mandate</li>
+                    </ul>
+                </div>
+                
+                <div class="talking-points">
+                    <h4>🗣️ Analysis Summary</h4>
+                    <p><em>"The analysis reveals that inflation has a stronger impact on exchange rates than interest rate policy alone. This supports the SARB's inflation-targeting mandate as a primary tool for currency stability."</em></p>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="nav-button" onclick="completePhase(4)">✅ Complete Phase 4</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Phase 5: AI Extension -->
+        <div class="phase" id="phase-5">
+            <div class="phase-header" onclick="togglePhase(5)">
+                <h3>🤖 Phase 5: AI Extension & Production Readiness</h3>
+                <div class="phase-time">2 minutes</div>
+            </div>
+            <div class="phase-content">
+                <div class="talking-points">
+                    <h4>🗣️ AI Extension Introduction</h4>
+                    <p><em>"For the optional AI extension, I've integrated Vertex AI Gemini to provide automated economic analysis. Let me demonstrate the AI infrastructure."</em></p>
+                </div>
+                
+                <div class="action-box">
+                    <h4>💻 AI Demo Command</h4>
+                    <div class="command-box">
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_full_ai.py --ai-demo
+                    </div>
+                    <button class="nav-button" onclick="copyCommand(this.nextElementSibling.textContent)" style="margin: 10px 0;">📋 Copy Command</button>
+                </div>
+                
+                <div class="talking-points">
+                    <h4>🗣️ AI Commentary</h4>
+                    <p><em>"The system shows enterprise-grade error handling - when AI models aren't fully configured, it gracefully degrades while maintaining core functionality. This demonstrates production-ready architecture."</em></p>
+                </div>
+                
+                <div class="action-box">
+                    <h4>💻 Production Architecture Demo</h4>
+                    <ol>
+                        <li>Show Section 8 in notebook: Production Deployment</li>
+                        <li>Highlight Docker configuration</li>
+                        <li>Explain Cloud Run deployment strategy</li>
+                        <li>Discuss Cloud Scheduler automation</li>
+                        <li>Mention cost optimization: $50-150/month</li>
+                    </ol>
+                </div>
+                
+                <div class="key-points">
+                    <h4>📊 Production Highlights</h4>
+                    <ul>
+                        <li><strong>Containerization:</strong> Docker for consistent deployment</li>
+                        <li><strong>Serverless:</strong> Cloud Run for automatic scaling</li>
+                        <li><strong>Automation:</strong> Daily Cloud Scheduler triggers</li>
+                        <li><strong>Monitoring:</strong> Built-in error handling and logging</li>
+                        <li><strong>Cost-Effective:</strong> $50-150/month operational cost</li>
+                    </ul>
+                </div>
+                
+                <div style="text-align: center; margin: 20px 0;">
+                    <button class="nav-button" onclick="completePhase(5)">✅ Complete Demo!</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Q&A Preparation -->
+        <div class="phase" id="phase-qa">
+            <div class="phase-header" onclick="togglePhase('qa')">
+                <h3>🎯 Q&A Preparation</h3>
+                <div class="phase-time">5 minutes</div>
+            </div>
+            <div class="phase-content">
+                <div class="key-points">
+                    <h4>🔧 Technical Questions</h4>
+                    <p><strong>Q: "How would you handle data quality issues?"</strong></p>
+                    <p><em>A: "The Silver layer includes comprehensive data validation - type checking, range validation, and null handling. Bad records are logged but don't stop processing."</em></p>
+                    
+                    <p><strong>Q: "What about scalability?"</strong></p>
+                    <p><em>A: "Cloud Run for serverless scaling, BigQuery for petabyte-scale analytics, and partitioned tables for query optimization."</em></p>
+                    
+                    <p><strong>Q: "How do you ensure data security?"</strong></p>
+                    <p><em>A: "All data encrypted in transit and at rest, IAM for access control, service accounts for authentication."</em></p>
+                </div>
+                
+                <div class="key-points">
+                    <h4>💼 Business Questions</h4>
+                    <p><strong>Q: "What's the business value?"</strong></p>
+                    <p><em>A: "Transforms SARB's data processing from manual days-long processes to automated minutes. Enables real-time policy decisions."</em></p>
+                    
+                    <p><strong>Q: "How does this integrate with existing systems?"</strong></p>
+                    <p><em>A: "Gold layer provides standard SQL interfaces. Can export to CSV, JSON, or connect directly via BigQuery connectors."</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Emergency Backup -->
+        <div class="phase" id="phase-emergency" style="display: none;">
+            <div class="phase-header" style="background: linear-gradient(45deg, #f44336, #ff9800);">
+                <h3>🆘 Emergency Backup Plans</h3>
+                <div class="phase-time">If needed</div>
+            </div>
+            <div class="phase-content">
+                <div class="emergency-box">
+                    <h4>🐛 If Python Demo Fails</h4>
+                    <ul>
+                        <li>Show the Jupyter notebook analysis instead</li>
+                        <li>Explain: "This demonstrates the same pipeline logic"</li>
+                        <li>Focus on the DDL statements and architecture</li>
+                    </ul>
+                </div>
+                
+                <div class="emergency-box">
+                    <h4>📊 If BigQuery Fails</h4>
+                    <ul>
+                        <li>Show the DDL statements in the notebook</li>
+                        <li>Explain: "Here's how the tables would be structured"</li>
+                        <li>Use the sample data in the analysis</li>
+                    </ul>
+                </div>
+                
+                <div class="emergency-box">
+                    <h4>🤖 If AI Demo Fails</h4>
+                    <ul>
+                        <li>Explain: "The AI infrastructure is set up"</li>
+                        <li>Show the prompt engineering in the notebook</li>
+                        <li>Display the JSON response structure</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Closing -->
+        <div class="phase" id="phase-closing">
+            <div class="phase-header" onclick="togglePhase('closing')">
+                <h3>🚀 Closing Statement</h3>
+                <div class="phase-time">Final words</div>
+            </div>
+            <div class="phase-content">
+                <div class="talking-points">
+                    <h4>🗣️ Professional Closing</h4>
+                    <p><em>"This solution demonstrates production-grade data engineering for financial sector requirements. It implements all assessment requirements - Medallion architecture, SARB API integration, statistical analysis, and AI extensions - while maintaining enterprise-level reliability, security, and cost optimization. Thank you for your time, and I'm happy to answer any questions about the technical implementation or business applications."</em></p>
+                </div>
+                
+                <div class="key-points">
+                    <h4>📞 Contact Information</h4>
+                    <ul>
+                        <li><strong>Email:</strong> mapindabrendon@gmail.com</li>
+                        <li><strong>Project:</strong> SARB Economic Data Pipeline</li>
+                        <li><strong>Demo Date:</strong> October 22, 2025</li>
+                        <li><strong>Repository:</strong> github.com/Brendon1109/sarb-economic-pipeline</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentPhase = 0;
+        let startTime = null;
+        let demoTimer = null;
+
+        function startDemo() {
+            startTime = new Date();
+            document.getElementById('timer').textContent = '⏱️ Demo Started - 00:00';
+            
+            demoTimer = setInterval(() => {
+                const elapsed = Math.floor((new Date() - startTime) / 1000);
+                const minutes = Math.floor(elapsed / 60);
+                const seconds = elapsed % 60;
+                document.getElementById('timer').textContent = 
+                    `⏱️ Elapsed: ${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }, 1000);
+            
+            togglePhase(1);
+            updateProgress(1);
+        }
+
+        function togglePhase(phaseNum) {
+            const phases = document.querySelectorAll('.phase');
+            phases.forEach(phase => {
+                phase.classList.remove('active');
+            });
+            
+            const targetPhase = document.getElementById(`phase-${phaseNum}`);
+            if (targetPhase) {
+                targetPhase.classList.add('active');
+                targetPhase.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            
+            currentPhase = phaseNum;
+        }
+
+        function nextPhase() {
+            if (currentPhase < 5) {
+                currentPhase++;
+                togglePhase(currentPhase);
+                updateProgress(currentPhase);
+            } else {
+                togglePhase('qa');
+            }
+        }
+
+        function completePhase(phaseNum) {
+            updateProgress(phaseNum);
+            
+            // Auto-advance to next phase
+            if (phaseNum < 5) {
+                setTimeout(() => {
+                    togglePhase(phaseNum + 1);
+                }, 1000);
+            } else {
+                // Demo complete
+                togglePhase('closing');
+                if (demoTimer) {
+                    clearInterval(demoTimer);
+                }
+                document.getElementById('timer').textContent = '✅ Demo Complete!';
+            }
+        }
+
+        function updateProgress(phaseNum) {
+            const progressFill = document.getElementById('progress');
+            const progress = (phaseNum / 5) * 100;
+            progressFill.style.width = progress + '%';
+        }
+
+        function openBackup() {
+            const emergencyPhase = document.getElementById('phase-emergency');
+            emergencyPhase.style.display = emergencyPhase.style.display === 'none' ? 'block' : 'none';
+            if (emergencyPhase.style.display === 'block') {
+                emergencyPhase.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function showCommands() {
+            const commands = `
+SARB Demo Commands Quick Reference:
+
+1. Pre-Demo Verification:
+gcloud auth list
+gcloud config get-value project
+
+2. Main Demo:
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\\demo_main.py --upload-sample-data
+
+3. BigQuery Verification:
+bq query --use_legacy_sql=false --project_id=brendon-presentation "SELECT indicator_name, value, date, category FROM brendon-presentation.sarb_economic_data.economic_indicators ORDER BY date DESC LIMIT 5"
+
+4. AI Demo:
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\\demo_full_ai.py --ai-demo
+
+5. Files to Open:
+- presentation/SARB_Economic_Pipeline.html
+- analysis/sarb_assessment_complete.ipynb
+            `;
+            
+            alert(commands);
+        }
+
+        function copyCommand(command) {
+            navigator.clipboard.writeText(command.trim()).then(() => {
+                alert('Command copied to clipboard!');
+            });
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            // Auto-open pre-demo checklist
+            togglePhase(0);
+        });
+    </script>
+</body>
+</html>

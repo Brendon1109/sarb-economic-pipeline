@@ -1,4 +1,55 @@
-# 🎯 SARB Economic Pipeline - Demo Walkthrough Guide
+# � SARB Assessment Demo Guide - Complete Walkthrough
+
+## 📋 Executive Summary
+
+You now have a complete, professional assessment demonstration package for the SARB Economic Pipeline project. This guide provides step-by-step instructions for delivering a compelling 15-minute presentation.
+
+## �🎯 Demo Objectives
+
+- **Demonstrate Production-Ready Solution**: Show enterprise-grade data engineering
+- **Cover All Assessment Requirements**: Medallion architecture, SARB API, statistical analysis
+- **Showcase Technical Excellence**: Live data processing, BigQuery integration, AI capabilities
+- **Deliver Business Value**: Cost-effective ($50-150/month), scalable, automated solution
+
+## 📁 Key Files to Use
+
+### 🎨 Presentation Materials
+1. **`presentation/Interactive_Demo_Guide.html`** - Your interactive demo controller
+2. **`presentation/SARB_Economic_Pipeline.html`** - Main presentation slides
+3. **`presentation/SARB_Demo_Flow_Diagram.md`** - Visual flow diagram (Mermaid)
+
+### 💻 Demo Scripts
+1. **`src/demo_main.py`** - Primary demo script (BigQuery integration)
+2. **`src/demo_full_ai.py`** - AI-enhanced version with Vertex AI
+3. **`analysis/sarb_assessment_complete.ipynb`** - Comprehensive analysis notebook
+
+### 📚 Reference Documents
+1. **`STEP_BY_STEP_DEMO_GUIDE.md`** - Detailed script and talking points
+2. **`DEMO_WALKTHROUGH.md`** - This comprehensive overview
+
+## 🚀 How to Execute the Demo
+
+### Pre-Demo Setup (5 minutes before)
+
+1. **Open Required Files:**
+   ```
+   - presentation/Interactive_Demo_Guide.html (in browser)
+   - presentation/SARB_Economic_Pipeline.html (in browser)
+   - analysis/sarb_assessment_complete.ipynb (in VS Code)
+   - PowerShell terminal (ready)
+   ```
+
+2. **Verify Technical Setup:**
+   ```powershell
+   gcloud auth list
+   gcloud config get-value project
+   # Should show: brendon-presentation
+   ```
+
+3. **Test Demo Script:**
+   ```powershell
+   C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_main.py --query-data
+   ```
 
 ## 📋 Pre-Demo Checklist
 
@@ -75,27 +126,20 @@ ORDER BY creation_time DESC"
 
 **6. Upload Sample Data**
 ```powershell
-# Run the sample data upload
-python src/main.py --upload-sample-data
+# Option A: Simple demo (guaranteed to work)
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_main.py --upload-sample-data
+
+# Option B: Full AI demo (if you want to show AI capabilities)
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_full_ai.py --upload-sample-data --ai-demo
 ```
 
 **7. Query Economic Indicators**
 ```powershell
-# Show GDP data
-gcloud bigquery query --use_legacy_sql=false "
-SELECT indicator_name, value, date 
-FROM \`brendon-presentation.sarb_economic_data.economic_indicators\` 
-WHERE indicator_name = 'GDP_Growth_Rate' 
-ORDER BY date DESC 
-LIMIT 5"
+# Direct BigQuery query
+bq query --use_legacy_sql=false --project_id=brendon-presentation "SELECT indicator_name, value, date, ai_insights FROM brendon-presentation.sarb_economic_data.economic_indicators ORDER BY date DESC LIMIT 5"
 
-# Show inflation data
-gcloud bigquery query --use_legacy_sql=false "
-SELECT indicator_name, value, date 
-FROM \`brendon-presentation.sarb_economic_data.economic_indicators\` 
-WHERE indicator_name = 'Inflation_Rate' 
-ORDER BY date DESC 
-LIMIT 5"
+# Python query with AI insights
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_full_ai.py --query-data
 ```
 
 ### **Part 4: Analysis & Insights (3 minutes)**
