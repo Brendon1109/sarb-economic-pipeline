@@ -1,0 +1,51 @@
+DEPLOYMENT INSTRUCTIONS
+=========================
+
+1. Create GitHub Repository:
+   - Go to https://github.com/new
+   - Repository name: sarb-reports
+   - Make it PUBLIC
+   - Click "Create repository"
+
+2. Upload Files:
+   - Upload all files from github_pages_deployment/ folder
+   - You can drag & drop or use Git commands
+
+3. Enable GitHub Pages:
+   - Go to repository Settings
+   - Scroll to "Pages" section
+   - Source: "Deploy from a branch"
+   - Branch: main
+   - Folder: / (root)
+   - Click Save
+
+4. Get Your URLs:
+   Your GitHub username is Brendon1109, so your URLs will be:
+   
+   Executive Summary:
+   https://Brendon1109.github.io/sarb-reports/executive_summary_embed_embeddable.html
+   
+   Economic Alerts:
+   https://Brendon1109.github.io/sarb-reports/economic_alerts_embed_embeddable.html
+   
+   Correlation Analysis:
+   https://Brendon1109.github.io/sarb-reports/sarb_correlation_analysis_embeddable.html
+   
+   Time Series:
+   https://Brendon1109.github.io/sarb-reports/sarb_timeseries_chart_embeddable.html
+
+5. Use in Looker Studio:
+   - Add Component → Embed
+   - Select "URL Embed"
+   - Paste the GitHub Pages URL
+   - Adjust size and positioning
+
+GitHub Pages usually takes 5-10 minutes to deploy
+Updates to files will automatically redeploy
+
+QUICK ALTERNATIVE: Netlify Drop
+================================
+1. Go to https://www.netlify.com/
+2. Drag github_pages_deployment/ folder to Netlify
+3. Get instant URL like: https://amazing-name-123.netlify.app/
+4. Use those URLs in Looker Studio

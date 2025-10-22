@@ -1,0 +1,30 @@
+{
+  "generated_date": "2025-10-22T15:25:01.353280",
+  "reports": {
+    "economic_alerts_embed": {
+      "filename": "economic_alerts_embed_embeddable.html",
+      "local_path": "analysis/embeddable_reports\\economic_alerts_embed_embeddable.html",
+      "placeholder_url": "https://YOUR-HOSTING-SERVICE.com/economic_alerts_embed_embeddable.html",
+      "description": "Real-time Economic Alerts and Indicators"
+    },
+    "executive_summary_embed": {
+      "filename": "executive_summary_embed_embeddable.html",
+      "local_path": "analysis/embeddable_reports\\executive_summary_embed_embeddable.html",
+      "placeholder_url": "https://YOUR-HOSTING-SERVICE.com/executive_summary_embed_embeddable.html",
+      "description": "Executive Economic Summary with AI insights"
+    },
+    "sarb_correlation_analysis": {
+      "filename": "sarb_correlation_analysis_embeddable.html",
+      "local_path": "analysis/embeddable_reports\\sarb_correlation_analysis_embeddable.html",
+      "placeholder_url": "https://YOUR-HOSTING-SERVICE.com/sarb_correlation_analysis_embeddable.html",
+      "description": "Economic Correlation Analysis Charts"
+    },
+    "sarb_timeseries_chart": {
+      "filename": "sarb_timeseries_chart_embeddable.html",
+      "local_path": "analysis/embeddable_reports\\sarb_timeseries_chart_embeddable.html",
+      "placeholder_url": "https://YOUR-HOSTING-SERVICE.com/sarb_timeseries_chart_embeddable.html",
+      "description": "Time Series Economic Data Visualization"
+    }
+  },
+  "instructions": "See EMBEDDABLE_URLS_GUIDE.md for setup instructions"
+}
