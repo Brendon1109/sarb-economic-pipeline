@@ -241,8 +241,9 @@
     
     <h2>Implementation References</h2>
     <ul>
-        <li><strong>Data Processing:</strong> <span class="file-ref">src/main.py</span></li>
-        <li><strong>Economic Analysis:</strong> <span class="file-ref">analysis/sarb_macroeconomic_analysis.ipynb</span></li>
+        <li><strong>Data Processing:</strong> <span class="file-ref">src/demo_main.py</span></li>
+        <li><strong>AI Analysis:</strong> <span class="file-ref">src/ai_demo_standalone.py</span></li>
+        <li><strong>Assessment Analysis:</strong> <span class="file-ref">analysis/sarb_assessment_complete.ipynb</span></li>
         <li><strong>Database Setup:</strong> <span class="file-ref">infrastructure/bigquery_setup.sql</span></li>
         <li><strong>Access Management:</strong> <span class="file-ref">scripts/grant_access.ps1</span></li>
     </ul>
@@ -265,7 +266,7 @@
     
     <div class="metrics-grid">
         <div>
-            <h3>1. Data Ingestion <span class="file-ref">src/main.py</span></h3>
+            <h3>1. Data Ingestion <span class="file-ref">src/demo_main.py</span></h3>
             <ul>
                 <li>Automated collection from multiple sources</li>
                 <li>Cloud Storage and Pub/Sub integration</li>
@@ -351,9 +352,9 @@
         <h3>Security Implementation <span class="file-ref">scripts/grant_access.ps1</span></h3>
         <div class="code-block">
 # Grant analyst permissions to user<br>
-.\grant_access.ps1 -ProjectId sarb-pipeline-prod -UserEmail analyst@sarb.co.za -RoleType analyst<br><br>
+.\grant_access.ps1 -ProjectId brendon-presentation -UserEmail analyst@sarb.co.za -RoleType analyst<br><br>
 # Verify user permissions<br>
-Test-Permissions -UserEmail analyst@sarb.co.za -ProjectId sarb-pipeline-prod
+Test-Permissions -UserEmail analyst@sarb.co.za -ProjectId brendon-presentation
         </div>
         
         <h4>Security Features:</h4>
@@ -533,36 +534,36 @@ OPTIONS(<br>
     <h2>Comprehensive Demo Flow</h2>
     
     <div class="demo-step">
-        <h4>Step 1: Data Upload Demonstration</h4>
-        <div class="code-block">python src/main.py --upload-data demo/economic_indicators.csv --validate</div>
-        <p><strong>Expected Result:</strong> Data processed and available in BigQuery within 30 seconds</p>
+        <h4>Step 1: Data Pipeline Demonstration</h4>
+        <div class="code-block">C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_main.py --upload-sample-data</div>
+        <p><strong>Expected Result:</strong> SARB economic indicators processed and available in BigQuery within 30 seconds</p>
     </div>
     
     <div class="demo-step">
-        <h4>Step 2: Access Management Demo</h4>
-        <div class="code-block">.\scripts\grant_access.ps1 -ProjectId sarb-pipeline-demo -UserEmail demo@sarb.co.za -RoleType analyst</div>
-        <p><strong>Expected Result:</strong> User receives BigQuery permissions and email notification</p>
+        <h4>Step 2: BigQuery Verification</h4>
+        <div class="code-block">C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_main.py --query-data</div>
+        <p><strong>Expected Result:</strong> Latest economic indicators displayed with proper schema validation</p>
     </div>
     
     <div class="demo-step">
-        <h4>Step 3: Economic Analysis Demo</h4>
-        <div class="code-block">jupyter notebook analysis/sarb_macroeconomic_analysis.ipynb</div>
-        <p><strong>Expected Result:</strong> Real-time economic indicators displayed with trend analysis</p>
+        <h4>Step 3: AI-Powered Analysis Demonstration</h4>
+        <div class="code-block">C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\ai_demo_standalone.py</div>
+        <p><strong>Expected Result:</strong> AI infrastructure demonstrated with sophisticated economic analysis capabilities</p>
     </div>
     
     <div class="demo-step">
-        <h4>Step 4: Security & Audit Demo</h4>
-        <div class="code-block">gcloud logging read "protoPayload.serviceName=bigquery.googleapis.com" --limit=10</div>
-        <p><strong>Expected Result:</strong> Complete audit trail visible, encryption confirmed</p>
+        <h4>Step 4: Comprehensive Assessment Analysis</h4>
+        <div class="code-block">Open analysis/sarb_assessment_complete.ipynb in VS Code</div>
+        <p><strong>Expected Result:</strong> Complete Medallion architecture, statistical analysis, and correlation findings displayed</p>
     </div>
     
     <div class="highlight-box">
         <h3>Demo Backup Plans</h3>
         <ul>
-            <li>Pre-recorded video of each demo step</li>
-            <li>Static screenshots with annotations</li>
-            <li>Offline sample data and prepared queries</li>
-            <li>Fallback presentation slides with expected outputs</li>
+            <li><a href="Interactive_Demo_Guide.html" target="_blank">📺 Interactive Demo Controller</a> - Real-time demo guidance</li>
+            <li><a href="SARB_Demo_Flow_Diagram.md" target="_blank">📋 Step-by-Step Demo Guide</a> - Complete walkthrough</li>
+            <li><a href="SARB_Economic_Pipeline_Slides.md" target="_blank">📊 Markdown Presentation</a> - Offline backup slides</li>
+            <li><a href="../analysis/sarb_assessment_complete.ipynb" target="_blank">📓 Assessment Notebook</a> - Complete analysis backup</li>
         </ul>
     </div>
 </div>
@@ -595,10 +596,10 @@ CLUSTER BY indicator_name, source;
         <div class="box">
             <h3>Cloud Storage Configuration</h3>
             <ul>
-                <li>Raw data: <code>sarb-economic-raw-data</code></li>
-                <li>Processed: <code>sarb-economic-processed</code></li>
-                <li>Backup: <code>sarb-economic-backups</code></li>
-                <li>Archive: <code>sarb-economic-archive</code></li>
+                <li>Raw data: <code>brendon-presentation-sarb-data</code></li>
+                <li>Processed: <code>brendon-presentation-processed</code></li>
+                <li>Backup: <code>brendon-presentation-backups</code></li>
+                <li>Archive: <code>brendon-presentation-archive</code></li>
             </ul>
         </div>
         
@@ -677,7 +678,9 @@ sarb-economic-pipeline/<br>
 ├── 📄 Dockerfile                          # Container configuration<br>
 ├── <br>
 ├── 📁 src/<br>
-│   └── 🐍 main.py                        # ✅ Core data processing<br>
+│   ├── 🐍 demo_main.py                   # ✅ Core demo pipeline<br>
+│   ├── 🤖 ai_demo_standalone.py          # ✅ AI demonstration<br>
+│   └── 🐍 main.py                        # Production pipeline<br>
 │<br>
 ├── 📁 scripts/<br>
 │   ├── 💻 grant_access.ps1               # ✅ Access management<br>
@@ -688,7 +691,8 @@ sarb-economic-pipeline/<br>
 │   └── 🗄️ bigquery_setup.sql             # ✅ Database schema<br>
 │<br>
 ├── 📁 analysis/<br>
-│   ├── 📊 sarb_macroeconomic_analysis.ipynb  # ✅ Economic analysis<br>
+│   ├── 📊 sarb_assessment_complete.ipynb # ✅ Assessment analysis<br>
+│   ├── 📊 sarb_macroeconomic_analysis.ipynb  # Macroeconomic analysis<br>
 │   └── 🤖 sample_ai_insights.md          # AI-generated insights<br>
 │<br>
 ├── 📁 docs/<br>
