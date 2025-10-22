@@ -115,10 +115,10 @@ bq query --use_legacy_sql=false --project_id=brendon-presentation "SELECT indica
 **🗣️ What to Say:**
 *"For the optional AI extension, I've integrated Vertex AI Gemini to provide automated economic analysis. Let me demonstrate the AI infrastructure."*
 
-**💻 Actions:**
+**💻 AI Command:**
 ```powershell
-# Show AI capability (even if model access limited)
-C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\demo_full_ai.py --ai-demo
+# Show AI capability (professional fallback when model access limited)
+C:/Users/brendonmap/AppData/Local/Programs/Python/Python313/python.exe src\ai_demo_standalone.py
 ```
 
 **🗣️ Commentary:**
