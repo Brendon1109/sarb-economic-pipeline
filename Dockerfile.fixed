@@ -12,7 +12,7 @@ WORKDIR /app
 USER app
 
 # Copy requirements first for better layer caching
-COPY --chown=app:app requirements_minimal.txt requirements.txt
+COPY --chown=app:app requirements_ultra_minimal.txt requirements.txt
 
 # Install Python dependencies
 RUN pip install --no-cache-dir --user -r requirements.txt
@@ -21,14 +21,10 @@ RUN pip install --no-cache-dir --user -r requirements.txt
 ENV PATH="/home/app/.local/bin:${PATH}"
 
 # Copy application code
-COPY --chown=app:app minimal_app.py main.py
-
-# Health check for container orchestration
-HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
-    CMD curl -f http://localhost:${PORT}/ || exit 1
+COPY --chown=app:app main_fixed.py main.py
 
 # Expose port
-EXPOSE ${PORT}
+EXPOSE 8080
 
-# Use Python directly for simpler deployment
+# Start the Flask application
 CMD ["python", "main.py"]
