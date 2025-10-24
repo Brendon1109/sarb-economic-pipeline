@@ -360,10 +360,8 @@ sarb-economic-pipeline/
 │   └── sample_ai_insights.md          # AI-generated insights
 │
 ├── docs/
-│   ├── ACCESS_MANAGEMENT.md           # User access procedures
-│   ├── GCP_PROJECT_SETUP.md          # Setup instructions
-│   ├── LYLE_ACCESS_SETUP.md           # Specific user setup
-│   └── QUICK_ACCESS_REFERENCE.md      # Quick reference guide
+│   ├── GCP_DEPLOYMENT_GUIDE.md        # Deployment instructions
+│   └── DATA_ARCHITECTURE_REPORT.md    # Architecture documentation
 │
 └── presentation/
     └── SARB_Economic_Pipeline_Presentation.md  # This presentation

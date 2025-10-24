@@ -415,10 +415,8 @@ sarb-economic-pipeline/
 │   └── 🤖 sample_ai_insights.md          # AI-generated economic insights
 │
 ├── 📁 docs/
-│   ├── 🔐 ACCESS_MANAGEMENT.md           # User access procedures and policies
-│   ├── ☁️ GCP_PROJECT_SETUP.md          # Google Cloud Platform setup guide
-│   ├── 👤 LYLE_ACCESS_SETUP.md           # Specific user onboarding procedures
-│   └── ⚡ QUICK_ACCESS_REFERENCE.md      # Quick reference for common tasks
+│   ├── ☁️ GCP_DEPLOYMENT_GUIDE.md        # Google Cloud Platform deployment guide
+│   └── 🏗️ DATA_ARCHITECTURE_REPORT.md    # Data architecture documentation
 │
 ├── 📁 presentation/
 │   ├── 📋 SARB_Economic_Pipeline_Presentation.md  # This presentation content
